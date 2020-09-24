@@ -28,6 +28,12 @@ public class WxUserInfoController {
         return userList;
     }
 
+    /**
+     * rabbitmq 消费
+     */
+
+
+
 
 
 }
