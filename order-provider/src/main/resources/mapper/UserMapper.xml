@@ -6,4 +6,10 @@
         select  * from wx_user_info
     </select>
 
+    <insert id="addmess" >
+        insert  into rabbit_cusmer  (name,type,message) values (
+            #{name},#{type},#{message}
+        )
+    </insert>
+
 </mapper>

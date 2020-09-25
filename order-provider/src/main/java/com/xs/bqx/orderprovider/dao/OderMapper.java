@@ -1,5 +1,6 @@
 package com.xs.bqx.orderprovider.dao;
 
+import com.xs.bqx.orderprovider.pojo.RabbitMessage;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -10,4 +11,7 @@ public interface OderMapper {
 
 
     List<Map> selectWxUserInfo();
+
+
+    void addmess(RabbitMessage re);
 }
