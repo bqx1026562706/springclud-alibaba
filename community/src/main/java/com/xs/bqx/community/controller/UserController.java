@@ -2,6 +2,7 @@ package com.xs.bqx.community.controller;
 
 import com.sun.java.browser.plugin2.liveconnect.v1.Result;
 import com.xs.bqx.community.pojo.ResumeHistoryClean;
+import com.xs.bqx.community.service.OrderStrategyService;
 import com.xs.bqx.community.service.UserService;
 import com.xs.bqx.community.utils.DESUtils;
 import org.slf4j.Logger;
@@ -41,6 +42,15 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private OrderStrategyService orderStrategyService;
+
+
+
+
+
+
 
 
     public static void main(String[] args) throws ParseException {
