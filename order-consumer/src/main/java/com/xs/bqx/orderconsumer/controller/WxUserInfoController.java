@@ -1,5 +1,6 @@
 package com.xs.bqx.orderconsumer.controller;
 
+import com.xs.bqx.common.pojo.UserInfo;
 import com.xs.bqx.orderconsumer.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,18 +21,23 @@ public class WxUserInfoController {
 
     /**
      * 配置了 FeignClient  想不明白的是：服务的提供者 需要controller 么，若只想做一个单纯的服务者呢
+     *
      * @return
      */
     @GetMapping("/selectWxUserInfo")
     @ResponseBody
-    public List<Map> selectWxUserInfo(){
-        List<Map> userList =   orderService.selectWxUserInfo();
+    public List<Map> selectWxUserInfo() {
+        List<Map> userList = orderService.selectWxUserInfo();
         return userList;
     }
 
-
-
-
+    //UserInfo
+    @GetMapping("/UserInfo")
+    @ResponseBody
+    public List<UserInfo> UserInfo() {
+        List<UserInfo> userList2 = orderService.UserInfo();
+        return userList2;
+    }
 
 
 }
