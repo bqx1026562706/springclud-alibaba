@@ -1,12 +1,17 @@
 package com.xs.bqx.community.service.impl;
 
+import com.xs.bqx.community.mapper.FileMapper;
 import com.xs.bqx.community.mapper.UserMapper;
 import com.xs.bqx.community.pojo.ResumeHistoryClean;
+import com.xs.bqx.community.pojo.Student;
+import com.xs.bqx.community.service.FileService;
 import com.xs.bqx.community.service.UserService;
 import com.xs.bqx.community.utils.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -21,6 +26,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private FileMapper fileMapper;
+
+    @Autowired(required = false)
+    private  FileService fileService;
 
   /*  @Override
     public ResultModel<User> getUser(String userId) {
@@ -78,8 +89,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public List<Map> getRpoCityList() {
+        //测试事务回滚
         List<Map> m=   userMapper.getRpoCityList();
+        //调用别的类  加入事务控制
+        Student student = new Student();
+
+        try {
+            fileService.addStudent(student);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("手动异常");
+        }
+/*
+        Student student = new Student();
+        student.setCourse("cs");
+        student.setName("sid");
+        try {
+            fileMapper.addStudent(student);
+        }catch (Exception e){
+            //不抛出
+            e.printStackTrace();
+            System.out.println("手动异常");
+        }*/
+
 
         return m;
     }

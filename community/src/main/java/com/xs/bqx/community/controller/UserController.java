@@ -1,7 +1,7 @@
 package com.xs.bqx.community.controller;
 
-import com.sun.java.browser.plugin2.liveconnect.v1.Result;
 import com.xs.bqx.community.pojo.ResumeHistoryClean;
+import com.xs.bqx.community.service.FileService;
 import com.xs.bqx.community.service.OrderStrategyService;
 import com.xs.bqx.community.service.UserService;
 import com.xs.bqx.community.utils.DESUtils;
@@ -9,11 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.apache.commons.lang3.StringUtils;
 import javax.mail.search.ComparisonTerm;
@@ -34,7 +32,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@RestController
+@Controller
 @RequestMapping("/user")
 public class UserController {
 
@@ -43,9 +41,20 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private OrderStrategyService orderStrategyService;
 
+
+    /**
+     * 测试  事务 多个嵌套，会不会生效
+     * @param args
+     * @throws ParseException
+     */
+    @GetMapping("/testTransactional")
+    @ResponseBody
+    public  List<Map>  testTransactional(){
+
+        List<Map> rpoCityList = userService.getRpoCityList();
+        return rpoCityList;
+    }
 
 
 
@@ -59,6 +68,11 @@ public class UserController {
         long until = LocalDate.now().until(localDate, ChronoUnit.DAYS);
         System.out.println(until);
 
+        String aaa="2222";
+        String bbb2="职位222";
+
+        String forma=String.format("项目：%s;职位：%s",StringUtils.isEmpty(aaa) ? "" : aaa, StringUtils.isEmpty(bbb2) ? "" : bbb2);
+        System.out.println(forma);
      /*
         LocalDate startDate = LocalDate.of(2019, 1, 1);
         LocalDate endDate = LocalDate.now();
@@ -350,15 +364,6 @@ public class UserController {
     }
 
 
-    @PostMapping("/mapUpload")
-    public Result uploadPhoto(@RequestParam("file") MultipartFile file,HttpServletRequest request){
-        if(!file.isEmpty()) {
-            // 获取文件名称,包含后缀
-            String fileName = file.getOriginalFilename();
-        }
-        return null;
-    }
-
     @RequestMapping("/excleDownLoad")
     public  byte[]  excleDownLoad(HttpServletRequest req , HttpServletResponse res){
             try {
@@ -492,6 +497,7 @@ public class UserController {
 
 
     @RequestMapping("/map")
+    @ResponseBody
     public Map<String, Object> getMap() {
         Map<String, Object> map = new HashMap<>(3);
         map.put("博客地址", "55");

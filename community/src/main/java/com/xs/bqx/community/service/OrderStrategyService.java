@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 /**
  * 策略 实现接口
  */
-@Service
 public interface OrderStrategyService {
 
     //预下单
